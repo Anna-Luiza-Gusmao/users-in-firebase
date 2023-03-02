@@ -1,5 +1,5 @@
 import { collection } from "@firebase/firestore"
-import { getDocs, onSnapshot } from "firebase/firestore"
+import { getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { firestore } from "../../firebase/config"
 import { TableUsers, UserContainer } from "./styles"

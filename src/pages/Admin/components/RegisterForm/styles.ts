@@ -14,9 +14,6 @@ export const RegisterContainer = styled.main`
         width: 80%;
 
         background: ${props => props.theme["orange-100"]};
-        box-shadow: -8px 9px 31px 1px rgb(255 211 180 / 41%);
-        -webkit-box-shadow: -8px 9px 31px 1px rgb(255 211 180 / 41%);
-        -moz-box-shadow: -8px 9px 31px 1px rgb(255 211 180 / 41%);
 
         section {
             display: grid;
