@@ -1,6 +1,9 @@
 import styled from "styled-components"
 
-export const UserContainer = styled.main`
+export const UserContainer = styled.div`
+    position: relative;
+    left: 20%;
+    max-width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
