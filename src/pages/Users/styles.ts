@@ -1,6 +1,9 @@
 import styled from "styled-components"
 
-export const UserContainer = styled.main`
+export const UserContainer = styled.div`
+    position: relative;
+    left: 20%;
+    max-width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,9 +20,6 @@ export const TableUsers = styled.table`
     text-align: left;
 
     background: ${props => props.theme["orange-100"]};
-    box-shadow: -8px 9px 31px 1px rgb(255 211 180 / 41%);
-    -webkit-box-shadow: -8px 9px 31px 1px rgb(255 211 180 / 41%);
-    -moz-box-shadow: -8px 9px 31px 1px rgb(255 211 180 / 41%);
 
     th {
         padding: 1.25rem 2rem;

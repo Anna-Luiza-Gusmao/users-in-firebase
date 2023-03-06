@@ -13,11 +13,11 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background-color: ${(props) => props.theme['white']};
+        background-color: ${(props) => props.theme['orange-400']};
         -webkit-font-smoothing: antialiased;
     }
     
-    body, input, textarea, button {
+    body, input, textarea, button, a {
         font-family: 'Lato', sans-serif;
         font-weight: 400;   
         font-size: 1rem;

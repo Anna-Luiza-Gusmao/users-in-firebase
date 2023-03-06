@@ -1,6 +1,7 @@
 import { collection } from "@firebase/firestore"
-import { getDocs, onSnapshot } from "firebase/firestore"
+import { getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react"
+import { NavBar } from "../../components/NavBar"
 import { firestore } from "../../firebase/config"
 import { TableUsers, UserContainer } from "./styles"
 
@@ -32,27 +33,30 @@ export function UsersPage() {
     }, [])
 
     return (
-        <UserContainer>
-            <TableUsers>
-                <thead>
-                    <tr>
-                        <th>Usuário</th>
-                        <th>E-mail</th>
-                        <th>Tipo de Acesso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        userList.map((user) => (
-                            <tr key={user.email}>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                <td>{user.typeUser}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </TableUsers>
-        </UserContainer>
+        <>
+            <NavBar />
+            <UserContainer>
+                <TableUsers>
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>E-mail</th>
+                            <th>Tipo de Acesso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            userList.map((user) => (
+                                <tr key={user.email}>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.typeUser}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </TableUsers>
+            </UserContainer>
+        </>
     )
 }
