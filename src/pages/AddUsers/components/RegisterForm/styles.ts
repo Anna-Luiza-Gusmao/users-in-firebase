@@ -1,6 +1,9 @@
 import styled from "styled-components"
 
 export const RegisterContainer = styled.main`
+    position: relative;
+    left: 20%;
+    max-width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;

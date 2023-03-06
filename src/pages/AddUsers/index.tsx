@@ -1,11 +1,11 @@
 import { NavBar } from "../../components/NavBar"
-import { UserList } from "../../components/UserList"
+import { RegisterForm } from "./components/RegisterForm"
 
-export function UsersPage() {
+export function AddUsers() {
     return (
         <>
             <NavBar />
-            <UserList />
+            <RegisterForm />
         </>
     )
 }
