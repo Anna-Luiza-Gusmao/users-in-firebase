@@ -6,6 +6,7 @@ import { AdminPage } from '../pages/Admin'
 import { LoginPage } from '../pages/Login'
 import { UsersPage } from '../pages/Users'
 import { AddUsers } from '../pages/AddUsers'
+import { Dashboard } from '../pages/Dashboard'
 
 export function Routers () {
     const { auth } = useContext(UsersContext)
@@ -18,12 +19,11 @@ export function Routers () {
                     (auth === 'administrador') ? <AdminPage /> 
                         : <UsersPage />
                 }/>
-            </Route>
-            <Route element={<Auth />}>
                 <Route path='/user/register' element={
                     (auth === 'administrador') ? <AddUsers /> 
                         : <UsersPage />
                 }/>
+                <Route path='/user/dashboard' element={<Dashboard />}/>
             </Route>
         </Routes>
     )
