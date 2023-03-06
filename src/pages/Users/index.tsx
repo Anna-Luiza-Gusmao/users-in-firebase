@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { NavBar } from "../../components/NavBar"
 import { firestore } from "../../firebase/config"
 import { TableUsers, UserContainer } from "./styles"
+import { Loader } from "../../components/Loader"
 
 interface DataUser {
     name: string,
@@ -37,24 +38,30 @@ export function UsersPage() {
             <NavBar />
             <UserContainer>
                 <TableUsers>
-                    <thead>
-                        <tr>
-                            <th>Usuário</th>
-                            <th>E-mail</th>
-                            <th>Tipo de Acesso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            userList.map((user) => (
-                                <tr key={user.email}>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.typeUser}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
+                    {
+                        userList.length === 0 ? <Loader /> : (
+                            <>
+                                <thead>
+                                    <tr>
+                                        <th>Usuário</th>
+                                        <th>E-mail</th>
+                                        <th>Tipo de Acesso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        userList.map((user) => (
+                                            <tr key={user.email}>
+                                                <td>{user.name}</td>
+                                                <td>{user.email}</td>
+                                                <td>{user.typeUser}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </>
+                        )
+                    }
                 </TableUsers>
             </UserContainer>
         </>
