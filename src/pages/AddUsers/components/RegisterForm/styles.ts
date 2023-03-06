@@ -62,29 +62,45 @@ export const RegisterContainer = styled.main`
             flex: 1;
         }
 
-        button {
-            all: unset;
-            cursor: pointer;
-            background: ${props => props.theme["orange-200"]};
-            color: ${props => props.theme["white"]};
-            text-align: center;
+        footer {
+            display: flex;
+            width: 100%; 
+            justify-content: flex-end;
 
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 8px;
-            width: 12rem;
+            button {
+                all: unset;
+                cursor: pointer;
+                background: ${props => props.theme["orange-200"]};
+                color: ${props => props.theme["white"]};
+                text-align: center;
 
-            transition: 0.2s background;
+                margin-top: 1.5rem;
+                padding: 1rem;
+                border-radius: 8px;
+                width: 12rem;
 
-            &:not(:disabled):hover {
-                background: ${props => props.theme["orange-400"]};
-            }
+                transition: 0.2s background;
 
-            &:disabled {
-                cursor: not-allowed;
-                background: ${props => props.theme["orange-150"]};
-                color: ${props => props.theme["gray-100"]};
+                &:not(:disabled):hover {
+                    background: ${props => props.theme["orange-400"]};
+                }
+
+                &:disabled {
+                    cursor: not-allowed;
+                    background: ${props => props.theme["orange-150"]};
+                    color: ${props => props.theme["gray-100"]};
+                }
             }
         }
     }
+`
+
+export const SelectedContainer = styled.select`
+    background: ${props => props.theme["orange-150"]};
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    flex: 1;
+    outline: none;
 `
