@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { 
     Button, 
     LogoContainer, 
@@ -10,6 +10,8 @@ import Logo from '../../assets/logo.svg'
 import { ChartLine, Plus, SignOut, Users } from "phosphor-react"
 
 export function NavBar() {
+    const navigate = useNavigate()
+
     return (
         <NavBarContainer>
             <LogoContainer>
@@ -17,7 +19,7 @@ export function NavBar() {
                 <h1>users<span>Login</span>.</h1>
                 <div />
             </LogoContainer>
-            <Button>
+            <Button onClick={() => navigate('/user/register')}>
                 <Plus size={20} color="#f2f2f2" />
                 Adicionar Usuário
             </Button>
