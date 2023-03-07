@@ -1,19 +1,22 @@
+import { useEffect, useState } from "react";
 import { NavBar } from "../../components/NavBar"
 import { DashboardContainer } from "./styles"
 import Chart from "react-apexcharts"
+import { collection } from "@firebase/firestore"
+import { getDocs } from "firebase/firestore"
+import { firestore } from "../../firebase/config"
+
 
 export function Dashboard() {
-    const series = [{ name: "usuários", data: [2, 1] }];
+    const allUsers = collection(firestore, "users")
+    let [amountUsers, setAmountUsers] = useState<number[]>([])
+
+    const series = [{ name: "usuários", data: amountUsers }]
     const options = {
         options: {
             chart: {
                 id: "bar"
             },
-            legend: {
-                show: true,
-                position: 'right',
-            },
-            
         },
         title: {
             text: "Total de Usuários",
@@ -35,7 +38,6 @@ export function Dashboard() {
         xaxis: {
             categories: ['administrador', 'supervisor']
         },
-        labels: ["Administrador", "Supervisor"],
         fill: {
             colors: ['#f59654', '#FF974F']
         },
@@ -45,6 +47,24 @@ export function Dashboard() {
             }
         },
     }
+    
+    useEffect(() => {
+        async function loadUsers() {
+            const querySnapshot = await getDocs(allUsers)
+            let administrators = 0
+            let supervisors = 0
+            querySnapshot.forEach((doc) => {
+                if(doc.data().typeUser === 'administrador') {
+                    administrators = administrators + 1
+                }else{
+                    supervisors = supervisors + 1
+                }
+            })
+
+            setAmountUsers([administrators, supervisors])
+        }
+        loadUsers()
+    }, [])
 
     return (
         <>
