@@ -7,6 +7,7 @@ import { LoginPage } from '../pages/Login'
 import { UsersPage } from '../pages/Users'
 import { AddUsers } from '../pages/AddUsers'
 import { Dashboard } from '../pages/Dashboard'
+import { NotAuthorized } from '../pages/NotAuthorized'
 
 export function Routers () {
     const { auth } = useContext(UsersContext)
@@ -21,7 +22,7 @@ export function Routers () {
                 }/>
                 <Route path='/user/register' element={
                     (auth === 'administrador') ? <AddUsers /> 
-                        : <UsersPage />
+                        : <NotAuthorized />
                 }/>
                 <Route path='/user/dashboard' element={<Dashboard />}/>
             </Route>
