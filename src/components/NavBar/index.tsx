@@ -8,13 +8,24 @@ import {
 } from "./styles"
 import Logo from '../../assets/logo.svg'
 import { ChartLine, Plus, SignOut, Users } from "phosphor-react"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { UsersContext } from "../../context/users"
 
 export function NavBar() {
     const navigate = useNavigate()
     const location = useLocation()
     const [colorSelectedUser, setColorSelectedUser] = useState('#f5883c')
     const [colorSelectedDashboard, setColorSelectedDashboard] = useState('#404040')
+    const { auth } = useContext(UsersContext)
+    const [adminPermission, setAdminPermission] = useState(false)
+
+    function verifyAdminPermission() {
+        if(auth === 'administrador') {
+            setAdminPermission(true)
+        }else{
+            setAdminPermission(false)
+        }
+    }
 
     useEffect(() => {
         function detectPathname() {
@@ -30,6 +41,7 @@ export function NavBar() {
             }
         }
         detectPathname()
+        verifyAdminPermission()
     }, [location])
 
     return (
@@ -39,8 +51,10 @@ export function NavBar() {
                 <h1>users<span>Login</span>.</h1>
                 <div />
             </LogoContainer>
-            <Button onClick={() => navigate('/user/register')}>
-                <Plus size={20} color="#f2f2f2" />
+            <Button onClick={() => navigate('/user/register')} disabled={!adminPermission}>
+                {
+                    adminPermission && <Plus size={20} color="#f2f2f2" /> 
+                }
                 Adicionar Usuário
             </Button>
             <NavBarElement>
