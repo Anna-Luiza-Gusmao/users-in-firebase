@@ -92,6 +92,12 @@ export const RegisterContainer = styled.main`
                 }
             }
         }
+
+        @media (max-width: 1196px) {
+            section {
+                grid-template-columns: 1fr;
+            }
+        }
     }
 `
 
