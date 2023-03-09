@@ -10,10 +10,19 @@ export const UserContainer = styled.div`
     height: 100vh;
 `
 
-export const TableUsers = styled.table`
+export const TableContainer = styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2rem;
     padding: 3rem;
     border-radius: 8px;
     width: 80%;
+    background: ${props => props.theme["orange-100"]};
+`
+
+export const TableUsers = styled.table`
+    width: 100%;
     border-collapse: separate;
     border-spacing: 0 0.5rem;
     margin-top:1.5rem;
