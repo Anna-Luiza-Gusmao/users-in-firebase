@@ -110,6 +110,10 @@ export function UserList() {
                         color="primary"
                         page={page} 
                         onChange={handleChange}
+                        style={{
+                            position: 'absolute',
+                            bottom: '2rem'
+                        }}
                     />
                 </ThemeProvider>
             </TableContainer>

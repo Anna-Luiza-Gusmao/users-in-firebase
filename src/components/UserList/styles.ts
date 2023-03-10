@@ -11,6 +11,7 @@ export const UserContainer = styled.div`
 `
 
 export const TableContainer = styled.section`
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -18,6 +19,7 @@ export const TableContainer = styled.section`
     padding: 3rem;
     border-radius: 8px;
     width: 80%;
+    height: 36rem;
     background: ${props => props.theme["orange-100"]};
 `
 
