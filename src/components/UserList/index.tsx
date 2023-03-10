@@ -3,8 +3,10 @@ import { TableContainer, TableUsers, UserContainer } from "./styles"
 import { Loader } from "../../components/Loader"
 import { collection } from "@firebase/firestore"
 import { getDocs } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Pagination, ThemeProvider, createTheme } from "@mui/material"
+import { Pencil, Trash } from "phosphor-react"
+import { DeleteModal } from "./components/DeleteModal"
 
 interface DataUser {
     name: string,
@@ -14,9 +16,9 @@ interface DataUser {
 
 const themePagination = createTheme({
     palette: {
-      primary: {
-        main: 'rgb(255,151,79, 0.2)'
-      },
+        primary: {
+            main: 'rgb(255,151,79, 0.2)'
+        },
     },
 })
 
@@ -27,35 +29,37 @@ export function UserList() {
     const [nextPage, setNextPage] = useState(page * 5)
     const [currentPage, setCurrentPage] = useState(0)
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        if(value === page) {
+        if (value === page) {
             return
-        }else{
+        } else {
             const differenceOfPages = page - value
             if (value < page) {
                 setCurrentPage(currentPage - (5 * differenceOfPages))
                 setNextPage(nextPage - (differenceOfPages * 5))
-            }else{
-                if(currentPage === 0) {
+            } else {
+                if (currentPage === 0) {
                     setCurrentPage((differenceOfPages * -1) * 5)
-                }else if(differenceOfPages * -1 === 1) {
+                } else if (differenceOfPages * -1 === 1) {
                     setCurrentPage(page * 5)
-                }else{
+                } else {
                     setCurrentPage(currentPage + (differenceOfPages * -1 * 5))
                 }
                 setNextPage(value * 5)
-            } 
+            }
 
             setPage(value)
-    
-            if(value === 1) setCurrentPage(0)
+
+            if (value === 1) setCurrentPage(0)
         }
     }
     const totalPages = Math.ceil(userList.length / 5)
     const newUserList = userList.slice(currentPage, nextPage)
 
+    const [openDeleteModal, setOpenDeleteModal] = useState(false)
+
     useEffect(() => {
     }, [page])
-     
+
     useEffect(() => {
         async function loadUsers() {
             let arrayUserList: DataUser[] = []
@@ -74,49 +78,59 @@ export function UserList() {
     }, [])
 
     return (
-        <UserContainer>
-            <TableContainer>
-                <TableUsers>
-                    {
-                        userList.length === 0 ? <Loader /> : (
-                            <>
-                                <thead>
-                                    <tr>
-                                        <th>Usuário</th>
-                                        <th>E-mail</th>
-                                        <th>Tipo de Acesso</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        newUserList.map((user) => (
-                                            <tr key={user.email}>
-                                                <td>{user.name}</td>
-                                                <td>{user.email}</td>
-                                                <td>{user.typeUser}</td>
-                                            </tr>
-                                        ))
-                                    }
-                                </tbody>
-                            </>
-                        )
-                    }
-                </TableUsers>
-                <ThemeProvider theme={themePagination}>
-                    <Pagination 
-                        count={totalPages} 
-                        defaultPage={1}
-                        shape="rounded" 
-                        color="primary"
-                        page={page} 
-                        onChange={handleChange}
-                        style={{
-                            position: 'absolute',
-                            bottom: '2rem'
-                        }}
-                    />
-                </ThemeProvider>
-            </TableContainer>
-        </UserContainer>
+            <UserContainer>
+                <TableContainer>
+                    <TableUsers>
+                        {
+                            userList.length === 0 ? <Loader /> : (
+                                <>
+                                    <thead>
+                                        <tr>
+                                            <th>Usuário</th>
+                                            <th>E-mail</th>
+                                            <th>Tipo de Acesso</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            newUserList.map((user) => (
+                                                <tr key={user.email}>
+                                                    <td>{user.name}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{user.typeUser}</td>
+                                                    <td style={{ cursor: 'pointer' }}><Pencil size={24} /></td>
+                                                    <td
+                                                        onClick={() => setOpenDeleteModal(true)}
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
+                                                        <Trash size={24} />
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </>
+                            )
+                        }
+                    </TableUsers>
+                    <ThemeProvider theme={themePagination}>
+                        <Pagination
+                            count={totalPages}
+                            defaultPage={1}
+                            shape="rounded"
+                            color="primary"
+                            page={page}
+                            onChange={handleChange}
+                            style={{
+                                position: 'absolute',
+                                bottom: '2rem'
+                            }}
+                        />
+                    </ThemeProvider>
+                </TableContainer>
+                <DeleteModal open={openDeleteModal} />
+            </UserContainer>
     )
 }

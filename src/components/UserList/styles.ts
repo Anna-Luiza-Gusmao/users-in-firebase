@@ -19,7 +19,7 @@ export const TableContainer = styled.section`
     padding: 3rem;
     border-radius: 8px;
     width: 80%;
-    height: 36rem;
+    height: 38.5rem;
     background: ${props => props.theme["orange-100"]};
 `
 
@@ -43,12 +43,18 @@ export const TableUsers = styled.table`
         padding: 1.25rem 2rem;
         background: rgb(255,151,79, 0.2);
 
+        &:nth-child(4) {
+            padding: 1.25rem 0;
+        }
+
         &:first-child {
+            width: 25%;
             border-top-left-radius: 6px;
             border-bottom-left-radius: 6px;
         }
 
         &:last-child {
+            padding: 1.25rem 0;
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
         }
