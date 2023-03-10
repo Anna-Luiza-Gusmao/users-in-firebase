@@ -23,6 +23,8 @@ export const dash = keyframes`
 `
 
 export const LoaderContainer = styled.div`
+    position: absolute;
+    top: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
