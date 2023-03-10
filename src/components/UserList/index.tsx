@@ -30,25 +30,28 @@ export function UserList() {
         if(value === page) {
             return
         }else{
+            const differenceOfPages = page - value
             if (value < page) {
-                setNextPage(nextPage - 5)
+                setCurrentPage(currentPage - (5 * differenceOfPages))
+                setNextPage(nextPage - (differenceOfPages * 5))
             }else{
+                if(currentPage === 0) {
+                    setCurrentPage((differenceOfPages * -1) * 5)
+                }else if(differenceOfPages * -1 === 1) {
+                    setCurrentPage(page * 5)
+                }else{
+                    setCurrentPage(currentPage + (differenceOfPages * -1 * 5))
+                }
                 setNextPage(value * 5)
             } 
 
             setPage(value)
     
-            if(value === 1) {
-                setCurrentPage(0)
-            }else{
-                setCurrentPage(page * 5)
-            }
+            if(value === 1) setCurrentPage(0)
         }
     }
     const totalPages = Math.ceil(userList.length / 5)
     const newUserList = userList.slice(currentPage, nextPage)
-
-    console.log(currentPage, '-', nextPage)
 
     useEffect(() => {
     }, [page])
