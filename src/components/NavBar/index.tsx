@@ -16,16 +16,7 @@ export function NavBar() {
     const location = useLocation()
     const [colorSelectedUser, setColorSelectedUser] = useState('#f5883c')
     const [colorSelectedDashboard, setColorSelectedDashboard] = useState('#404040')
-    const { auth } = useContext(UsersContext)
-    const [adminPermission, setAdminPermission] = useState(false)
-
-    function verifyAdminPermission() {
-        if(auth === 'administrador') {
-            setAdminPermission(true)
-        }else{
-            setAdminPermission(false)
-        }
-    }
+    const { adminPermission } = useContext(UsersContext)
 
     useEffect(() => {
         function detectPathname() {
@@ -41,7 +32,6 @@ export function NavBar() {
             }
         }
         detectPathname()
-        verifyAdminPermission()
     }, [location])
 
     return (
@@ -51,7 +41,7 @@ export function NavBar() {
                 <h1>users<span>Login</span>.</h1>
                 <div />
             </LogoContainer>
-            <Button onClick={() => navigate('/user/register')} disabled={!adminPermission}>
+            <Button onClick={() => navigate('/user/register')} style={{display: `${adminPermission}`}}>
                 {
                     adminPermission && <Plus size={20} color="#f2f2f2" /> 
                 }
