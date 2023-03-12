@@ -3,12 +3,13 @@ import { TableContainer, TableUsers, UserContainer } from "./styles"
 import { Loader } from "../../components/Loader"
 import { collection } from "@firebase/firestore"
 import { getDocs } from "firebase/firestore"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Pagination, ThemeProvider, createTheme } from "@mui/material"
 import { Pencil, Trash } from "phosphor-react"
 import { DeleteModal } from "./components/DeleteModal"
 
 interface DataUser {
+    id: string,
     name: string,
     email: string,
     typeUser: string
@@ -56,6 +57,11 @@ export function UserList() {
     const newUserList = userList.slice(currentPage, nextPage)
 
     const [openDeleteModal, setOpenDeleteModal] = useState(false)
+    const [dataUser, setDataUser] = useState<string[]>([])
+    function getDeleteUser(id: string, user: string){
+        setOpenDeleteModal(true)
+        setDataUser([id, user])
+    }
 
     useEffect(() => {
     }, [page])
@@ -66,6 +72,7 @@ export function UserList() {
             const querySnapshot = await getDocs(allUsers)
             querySnapshot.forEach((doc) => {
                 arrayUserList.push({
+                    id: doc.id,
                     name: doc.data().name,
                     email: doc.data().email,
                     typeUser: doc.data().typeUser
@@ -75,7 +82,7 @@ export function UserList() {
         }
 
         loadUsers()
-    }, [])
+    }, [userList])
 
     return (
             <UserContainer>
@@ -102,7 +109,7 @@ export function UserList() {
                                                     <td>{user.typeUser}</td>
                                                     <td style={{ cursor: 'pointer' }}><Pencil size={24} /></td>
                                                     <td
-                                                        onClick={() => setOpenDeleteModal(true)}
+                                                        onClick={() => getDeleteUser(user.id, user.email)}
                                                         style={{ cursor: 'pointer' }}
                                                     >
                                                         <Trash size={24} />
@@ -130,7 +137,11 @@ export function UserList() {
                         />
                     </ThemeProvider>
                 </TableContainer>
-                <DeleteModal open={openDeleteModal} />
+                <DeleteModal 
+                    open={openDeleteModal} 
+                    setOpenDeleteModal={setOpenDeleteModal}
+                    user={dataUser}
+                />
             </UserContainer>
     )
 }

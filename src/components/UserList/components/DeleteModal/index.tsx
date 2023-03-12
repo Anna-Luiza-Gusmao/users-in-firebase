@@ -1,6 +1,8 @@
+import { deleteDoc, getDocs, collection, doc } from '@firebase/firestore'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { X } from 'phosphor-react'
+import { firestore } from '../../../../firebase/config'
 import { Button, DeleteModalContainer } from './styles'
 
 const style = {
@@ -17,23 +19,38 @@ const style = {
 
 interface DeleteModalProps {
     open: boolean
+    setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>,
+    user: Array<string>
 }
 
-export function DeleteModal({open}: DeleteModalProps) {
-    const handleClose = () => console.log('fechar')
+export function DeleteModal({open, setOpenDeleteModal, user}: DeleteModalProps) {
+    const allUsers = collection(firestore, "users")
+
+    async function handleDeleteUser(id: string){
+        const querySnapshot = await getDocs(allUsers)
+        querySnapshot.forEach((document) => {
+            if(document.id === id) {
+                deleteDoc(doc(firestore, "users", id))
+            }
+        })
+        setOpenDeleteModal(false)
+    }
 
     return (
         <Modal
             open={open}
-            onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
                 <DeleteModalContainer>
-                    <X size={24} />
-                    <p>Deseja realmente excluir o usuário fulano?</p>
-                    <Button>
+                    <X 
+                        size={24} 
+                        style={{cursor: 'pointer'}}
+                        onClick={() => setOpenDeleteModal(false)}
+                    />
+                    <p>Deseja realmente excluir o usuário {user[1]}?</p>
+                    <Button onClick={() => handleDeleteUser(user[0])}>
                         Excluir usuário
                     </Button>
                 </DeleteModalContainer>
