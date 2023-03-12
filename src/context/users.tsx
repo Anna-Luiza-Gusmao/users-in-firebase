@@ -3,7 +3,8 @@ import { ReactNode, createContext, useEffect, useState } from 'react'
 interface UsersContextType {
     auth: string,
     setAuth: React.Dispatch<React.SetStateAction<string>>,
-    adminPermission: string
+    adminPermission: string,
+    adminPermissionInComponents: boolean
 }
 
 export const UsersContext = createContext({} as UsersContextType)
@@ -18,13 +19,16 @@ export function UsersContextProvider({ children }: UsersContextProviderProps) {
     if(userPermission != null) emptyPermission = userPermission
     const [auth, setAuth] = useState(emptyPermission)
     const [adminPermission, setAdminPermission] = useState('none')
+    const [adminPermissionInComponents, setAdminPermissionInComponents] = useState(false)
 
     useEffect(() => {
         function verifyAdminPermission() {
             if(auth === 'administrador') {
                 setAdminPermission('flex')
+                setAdminPermissionInComponents(false)
             }else{
                 setAdminPermission('none')
+                setAdminPermissionInComponents(true)
             }
         }
         verifyAdminPermission()
@@ -34,7 +38,8 @@ export function UsersContextProvider({ children }: UsersContextProviderProps) {
         <UsersContext.Provider value={{
             auth,
             setAuth,
-            adminPermission
+            adminPermission,
+            adminPermissionInComponents
         }}
         >
             {children}

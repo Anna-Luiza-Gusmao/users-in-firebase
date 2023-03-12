@@ -60,3 +60,17 @@ export const TableUsers = styled.table`
         }
     }
 `
+
+export const TrashButton = styled.button`
+    all: unset;
+    svg {
+        cursor: pointer;
+    }
+
+    &:disabled {
+        svg {
+            cursor: not-allowed;
+            color: ${props => props.theme["gray-100"]};
+        } 
+    }
+`

@@ -1,12 +1,13 @@
 import { firestore } from "../../firebase/config"
-import { TableContainer, TableUsers, UserContainer } from "./styles"
+import { TableContainer, TableUsers, TrashButton, UserContainer } from "./styles"
 import { Loader } from "../../components/Loader"
 import { collection } from "@firebase/firestore"
 import { getDocs } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Pagination, ThemeProvider, createTheme } from "@mui/material"
 import { Pencil, Trash } from "phosphor-react"
 import { DeleteModal } from "./components/DeleteModal"
+import { UsersContext } from "../../context/users"
 
 interface DataUser {
     id: string,
@@ -63,6 +64,8 @@ export function UserList() {
         setDataUser([id, user])
     }
 
+    const { adminPermissionInComponents } = useContext(UsersContext)
+
     useEffect(() => {
     }, [page])
 
@@ -108,11 +111,14 @@ export function UserList() {
                                                     <td>{user.email}</td>
                                                     <td>{user.typeUser}</td>
                                                     <td style={{ cursor: 'pointer' }}><Pencil size={24} /></td>
-                                                    <td
-                                                        onClick={() => getDeleteUser(user.id, user.email)}
-                                                        style={{ cursor: 'pointer' }}
-                                                    >
-                                                        <Trash size={24} />
+                                                    <td>
+                                                        <TrashButton 
+                                                            style={{all: 'unset'}}
+                                                            disabled={adminPermissionInComponents}
+                                                            onClick={() => getDeleteUser(user.id, user.email)}
+                                                        >
+                                                            <Trash size={24} />
+                                                        </TrashButton>
                                                     </td>
                                                 </tr>
                                             ))
