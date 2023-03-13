@@ -8,6 +8,7 @@ import { Pagination, ThemeProvider, createTheme } from "@mui/material"
 import { Pencil, Trash } from "phosphor-react"
 import { DeleteModal } from "./components/DeleteModal"
 import { UsersContext } from "../../context/users"
+import { AlterModal } from "./components/AlterModal"
 
 interface DataUser {
     id: string,
@@ -58,6 +59,7 @@ export function UserList() {
     const newUserList = userList.slice(currentPage, nextPage)
 
     const [openDeleteModal, setOpenDeleteModal] = useState(false)
+    const [openAlterModal, setOpenAlterModal] = useState(false)
     const [dataUser, setDataUser] = useState<string[]>([])
     function getDeleteUser(id: string, user: string){
         setOpenDeleteModal(true)
@@ -110,7 +112,12 @@ export function UserList() {
                                                     <td>{user.name}</td>
                                                     <td>{user.email}</td>
                                                     <td>{user.typeUser}</td>
-                                                    <td style={{ cursor: 'pointer' }}><Pencil size={24} /></td>
+                                                    <td 
+                                                        onClick={() => setOpenAlterModal(true)}
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
+                                                        <Pencil size={24} />
+                                                    </td>
                                                     <td>
                                                         <TrashButton 
                                                             style={{all: 'unset'}}
@@ -147,6 +154,10 @@ export function UserList() {
                     open={openDeleteModal} 
                     setOpenDeleteModal={setOpenDeleteModal}
                     user={dataUser}
+                />
+                <AlterModal 
+                    open={openAlterModal} 
+                    setOpenAlterModal={setOpenAlterModal}
                 />
             </UserContainer>
     )
