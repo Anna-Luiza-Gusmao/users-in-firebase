@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { addDoc, collection } from "@firebase/firestore"
 import { firestore } from "../../../../firebase/config"
+import { SelectedContainer } from "./styles"
 
 const registerFormSchema = z.object({
     name: z.string(),
@@ -37,7 +38,7 @@ export function RegisterForm() {
         try {
             addDoc(allUsers, datas)
             reset()
-        } catch (e){
+        } catch (e) {
             console.log(e)
         }
     }
@@ -52,11 +53,11 @@ export function RegisterForm() {
                 <section>
                     <div>
                         <label htmlFor="nome">Nome</label>
-                        <input id="nome" type="string" {...register('name')}/>
+                        <input id="nome" type="string" {...register('name')} />
                     </div>
                     <div>
                         <label htmlFor="email">Email</label>
-                        <input id="email" type="email" {...register('email')}/>
+                        <input id="email" type="email" {...register('email')} />
                     </div>
                     <div>
                         <label htmlFor="password">Senha</label>
@@ -68,11 +69,17 @@ export function RegisterForm() {
                     </div>
                     <div>
                         <label htmlFor="user">Tipo de Usuário</label>
-                        <input id="user" type="string" {...register('typeUser')}/>
+                        <SelectedContainer {...register('typeUser')}>
+                            <option value="supervisor">supervisor</option>
+                            <option value="administrador">administrador</option>
+                        </SelectedContainer>
+                        {/* <input id="user" type="string" {...register('typeUser')}/> */}
                     </div>
                 </section>
 
-                <button disabled={!isDirty}>Cadastrar Usuário</button>
+                <footer style={{display: 'flex', width:'100%', justifyContent: 'flex-end'}}>
+                    <button disabled={!isDirty}>Cadastrar Usuário</button>
+                </footer>
             </form>
         </RegisterContainer>
     )

@@ -47,7 +47,7 @@ export function LoginPage() {
         new Promise(() => {
             setTimeout(() => {
                 navigate('/user', { replace: true })
-            }, 1500)
+            }, 2000)
         })
     }
 
